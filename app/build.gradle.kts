@@ -22,6 +22,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+//        for more safety, put the API KEY in the local properties
         buildConfigField("String", "API_KEY", "\"97fbd76a3eae5cdf0977f2586d6b885e\"")
     }
 
