@@ -15,7 +15,13 @@ import com.mypersonalmovie.utils.getPosterUrl
 class MoviePagingAdapter(private val isPopularLayout: Boolean = true) :
     PagingDataAdapter<MovieModel, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
-    class PopularViewHolder(private val binding: ItemPopularMovieBinding) :
+    private var onItemClick: (MovieModel) -> Unit = {}
+
+    fun setOnItemClickListener(listener: (MovieModel) -> Unit) {
+        onItemClick = listener
+    }
+
+    inner class PopularViewHolder(private val binding: ItemPopularMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: MovieModel?) {
             binding.apply {
@@ -23,11 +29,15 @@ class MoviePagingAdapter(private val isPopularLayout: Boolean = true) :
                     .load(item?.backdropPath?.getBackDropUrl())
                     .into(ivMoviePoster)
                 tvMoviePoster.text = item?.title
+
+                root.setOnClickListener {
+                    item?.let { onItemClick(it) }
+                }
             }
         }
     }
 
-    class GeneralViewHolder(private val binding: ItemGeneralMovieBinding) :
+    inner class GeneralViewHolder(private val binding: ItemGeneralMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: MovieModel?) {
             binding.apply {
@@ -36,6 +46,10 @@ class MoviePagingAdapter(private val isPopularLayout: Boolean = true) :
                     .into(ivMoviePoster)
                 tvMovieTitle.text = item?.title
                 tvReleaseDate.text = item?.releaseDate
+
+                root.setOnClickListener {
+                    item?.let { onItemClick(it) }
+                }
             }
         }
     }

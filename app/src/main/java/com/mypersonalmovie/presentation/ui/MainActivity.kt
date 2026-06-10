@@ -93,6 +93,9 @@ class MainActivity : AppCompatActivity() {
                     showErrorDialog(this@MainActivity, errorState.error.message.toString())
                 }
             }
+            nowPlayingAdapter.setOnItemClickListener {
+                Toast.makeText(this@MainActivity, "Coming Soon ${it.title}", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -118,6 +121,9 @@ class MainActivity : AppCompatActivity() {
                     showErrorDialog(this@MainActivity, errorState.error.message.toString())
                 }
             }
+            topRatedAdapter.setOnItemClickListener {
+                Toast.makeText(this@MainActivity, "Coming Soon ${it.title}", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -142,6 +148,9 @@ class MainActivity : AppCompatActivity() {
                 if (errorState != null) {
                     showErrorDialog(this@MainActivity, errorState.error.message.toString())
                 }
+            }
+            popularAdapter.setOnItemClickListener {
+                Toast.makeText(this@MainActivity, "Coming Soon ${it.title}", Toast.LENGTH_SHORT).show()
             }
         }
     }
