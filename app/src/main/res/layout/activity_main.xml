@@ -5,15 +5,176 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_marginBottom="16dp"
+    tools:context=".presentation.ui.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:background="?attr/colorPrimary"
+        app:title="My Movie"
+        app:titleTextColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_popular_movie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="16dp"
+                android:text="@string/popular_movie"
+                style="@style/HeaderTextStyle"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_popular_movie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_popular_movie"
+                tools:itemCount="3"
+                android:contentDescription="@string/list_popular_movie"
+                app:layout_constraintTop_toBottomOf="@id/tv_popular_movie"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <ProgressBar
+                android:id="@+id/pb_popular_movie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/rv_popular_movie"
+                app:layout_constraintStart_toStartOf="@id/rv_popular_movie"
+                app:layout_constraintEnd_toEndOf="@id/rv_popular_movie"
+                app:layout_constraintBottom_toBottomOf="@id/rv_popular_movie"/>
+
+            <TextView
+                android:id="@+id/tv_empty_popular_movie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_empty"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/rv_popular_movie"
+                app:layout_constraintStart_toStartOf="@id/rv_popular_movie"
+                app:layout_constraintEnd_toEndOf="@id/rv_popular_movie"
+                app:layout_constraintBottom_toBottomOf="@id/rv_popular_movie"/>
+
+            <TextView
+                android:id="@+id/tv_top_rated_movie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginHorizontal="16dp"
+                android:text="@string/top_rated_movie"
+                style="@style/HeaderTextStyle"
+                app:layout_constraintTop_toBottomOf="@id/rv_popular_movie"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_top_rated_movie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_top_rated_movie"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_general_movie" />
+
+            <ProgressBar
+                android:id="@+id/pb_top_rated_movie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/rv_top_rated_movie"
+                app:layout_constraintStart_toStartOf="@id/rv_top_rated_movie"
+                app:layout_constraintEnd_toEndOf="@id/rv_top_rated_movie"
+                app:layout_constraintBottom_toBottomOf="@id/rv_top_rated_movie"/>
+
+            <TextView
+                android:id="@+id/tv_empty_top_rated_movie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_empty"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/rv_top_rated_movie"
+                app:layout_constraintStart_toStartOf="@id/rv_top_rated_movie"
+                app:layout_constraintEnd_toEndOf="@id/rv_top_rated_movie"
+                app:layout_constraintBottom_toBottomOf="@id/rv_top_rated_movie"/>
+
+            <TextView
+                android:id="@+id/tv_now_playing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginHorizontal="16dp"
+                android:text="@string/now_playing"
+                style="@style/HeaderTextStyle"
+                app:layout_constraintTop_toBottomOf="@id/rv_top_rated_movie"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_now_playing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_now_playing"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_general_movie" />
+
+            <ProgressBar
+                android:id="@+id/pb_now_playing_movie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/rv_now_playing"
+                app:layout_constraintStart_toStartOf="@id/rv_now_playing"
+                app:layout_constraintEnd_toEndOf="@id/rv_now_playing"
+                app:layout_constraintBottom_toBottomOf="@id/rv_now_playing"/>
+
+            <TextView
+                android:id="@+id/tv_empty_now_playing_movie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/data_empty"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/rv_now_playing"
+                app:layout_constraintStart_toStartOf="@id/rv_now_playing"
+                app:layout_constraintEnd_toEndOf="@id/rv_now_playing"
+                app:layout_constraintBottom_toBottomOf="@id/rv_now_playing"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

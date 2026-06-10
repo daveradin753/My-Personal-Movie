@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">My Personal Movie</string>
+    <string name="popular_movie">Popular Movie</string>
+    <string name="list_popular_movie">List popular movie</string>
+    <string name="data_empty">Data Empty</string>
+    <string name="error">Error</string>
+    <string name="unknown_error">An unknown error occurred.</string>
+    <string name="ok">Ok</string>
+    <string name="top_rated_movie">Top Rated Movie</string>
+    <string name="now_playing">Now Playing</string>
+    <string name="favorites">Favorites</string>
 </resources>

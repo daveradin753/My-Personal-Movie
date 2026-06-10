@@ -8,11 +8,7 @@ plugins {
 
 android {
     namespace = "com.mypersonalmovie"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.mypersonalmovie"
@@ -23,7 +19,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 //        for more safety, put the API KEY in the local properties
-        buildConfigField("String", "API_KEY", "\"97fbd76a3eae5cdf0977f2586d6b885e\"")
+        buildConfigField("String", "API_KEY", "\"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5N2ZiZDc2YTNlYWU1Y2RmMDk3N2YyNTg2ZDZiODg1ZSIsIm5iZiI6MTc4MTAwNzQ5OC43MDEsInN1YiI6IjZhMjgwNDhhYWQ1YmUwNTZkYjdlN2I2YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.5_rcJXgbpkq2ts7-2xU5j05kN5zYYo_QAhUZYPe3cK0\"")
     }
 
     buildTypes {
@@ -36,8 +32,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
     }
     buildFeatures {
         viewBinding = true
