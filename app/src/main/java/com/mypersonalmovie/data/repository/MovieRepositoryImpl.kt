@@ -4,6 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.mypersonalmovie.data.dtos.MovieDetail
+import com.mypersonalmovie.data.local.dao.MovieDao
 import com.mypersonalmovie.data.paging.MoviePagingSource
 import com.mypersonalmovie.data.paging.ReviewPagingSource
 import com.mypersonalmovie.data.source.MovieApiService
@@ -15,7 +16,8 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
-    private val movieApiService: MovieApiService
+    private val movieApiService: MovieApiService,
+    private val movieDao: MovieDao
 ): MovieRepository {
 
     override fun getPopularMovies(): Flow<PagingData<MovieModel>> {
