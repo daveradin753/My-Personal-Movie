@@ -9,4 +9,9 @@
     <string name="top_rated_movie">Top Rated Movie</string>
     <string name="now_playing">Now Playing</string>
     <string name="favorites">Favorites</string>
+    <string name="share">Share</string>
+    <string name="copy_title">Copy Title</string>
+    <string name="title_copied">Title copied to clipboard</string>
+    <string name="reviews">Reviews</string>
+    <string name="movie_image_description">Movie Image</string>
 </resources>

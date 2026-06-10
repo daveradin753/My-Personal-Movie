@@ -1,11 +1,16 @@
 package com.mypersonalmovie.presentation.ui
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
@@ -32,6 +37,15 @@ class MainActivity : AppCompatActivity() {
     private val topRatedAdapter by lazy { MoviePagingAdapter(false) }
     private val nowPlayingAdapter by lazy { MoviePagingAdapter(false) }
 
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                Toast.makeText(this, "Notification permission granted", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Notification permission denied", Toast.LENGTH_SHORT).show()
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -44,6 +58,19 @@ class MainActivity : AppCompatActivity() {
         }
         setUpObserver()
         setUpUi()
+        checkNotificationPermission()
+    }
+
+    private fun checkNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
     }
 
     private fun setUpUi() {
@@ -94,7 +121,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             nowPlayingAdapter.setOnItemClickListener {
-                Toast.makeText(this@MainActivity, "Coming Soon ${it.title}", Toast.LENGTH_SHORT).show()
+                DetailMovieActivity.instance(this@MainActivity, it)
             }
         }
     }
@@ -122,7 +149,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             topRatedAdapter.setOnItemClickListener {
-                Toast.makeText(this@MainActivity, "Coming Soon ${it.title}", Toast.LENGTH_SHORT).show()
+                DetailMovieActivity.instance(this@MainActivity, it)
             }
         }
     }
@@ -150,7 +177,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             popularAdapter.setOnItemClickListener {
-                Toast.makeText(this@MainActivity, "Coming Soon ${it.title}", Toast.LENGTH_SHORT).show()
+                DetailMovieActivity.instance(this@MainActivity, it)
             }
         }
     }
