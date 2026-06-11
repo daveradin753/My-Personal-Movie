@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -193,7 +194,7 @@ class DetailMovieActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.deleteFavoriteMovie.collectLatest {
-                    Toast.makeText(this@DetailMovieActivity, it, Toast.LENGTH_SHORT).show()
+                    Log.d("DetailMovieActivity", "deleteObserver: $it")
                 }
             }
         }
@@ -203,7 +204,7 @@ class DetailMovieActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.insertFavoriteMovie.collectLatest {
-                    Toast.makeText(this@DetailMovieActivity, it, Toast.LENGTH_SHORT).show()
+                    Log.d("DetailMovieActivity", "insertObserver: $it")
                 }
             }
         }
