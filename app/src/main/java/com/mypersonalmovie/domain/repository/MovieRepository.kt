@@ -16,5 +16,6 @@ interface MovieRepository {
     fun insertFavoriteMovie(movie: MovieModel): Flow<String>
     fun deleteFavoriteMovie(movieId: Int): Flow<String>
     fun isFavoriteMovie(movieId: Int): Flow<Boolean>
+    fun getAllFavoriteMovies(): Flow<List<MovieModel>>
 
 }

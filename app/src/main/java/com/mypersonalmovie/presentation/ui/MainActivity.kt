@@ -81,8 +81,7 @@ class MainActivity : AppCompatActivity() {
                 setOnMenuItemClickListener {
                     when (it.itemId) {
                         R.id.action_favorite -> {
-                            //Move into favorite screen
-                            Toast.makeText(this@MainActivity, "Coming Soon", Toast.LENGTH_SHORT).show()
+                            FavoriteActivity.instance(this@MainActivity)
                             true
                         }
                         else -> false

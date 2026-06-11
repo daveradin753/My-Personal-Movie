@@ -12,9 +12,11 @@ import com.mypersonalmovie.data.source.MovieApiService
 import com.mypersonalmovie.domain.model.MovieModel
 import com.mypersonalmovie.domain.model.ReviewModel
 import com.mypersonalmovie.domain.repository.MovieRepository
+import com.mypersonalmovie.utils.toDomainModel
 import com.mypersonalmovie.utils.toEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
@@ -100,6 +102,12 @@ class MovieRepositoryImpl @Inject constructor(
 
     override fun isFavoriteMovie(movieId: Int): Flow<Boolean> {
         return movieDao.isMovieExists(movieId)
+    }
+
+    override fun getAllFavoriteMovies(): Flow<List<MovieModel>> {
+        return movieDao.getAllMovies().map { movieEntities ->
+            movieEntities.map { it.toDomainModel() }
+        }
     }
 
 }

@@ -45,6 +45,7 @@ class DetailMovieActivity : AppCompatActivity() {
     companion object {
         fun instance(context: Context, movieModel: MovieModel?) {
             val intent = Intent(context, DetailMovieActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             intent.putExtra("movieModel", movieModel)
             context.startActivity(intent)
         }
