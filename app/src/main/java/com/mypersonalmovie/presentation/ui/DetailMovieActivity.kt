@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
@@ -66,8 +67,10 @@ class DetailMovieActivity : AppCompatActivity() {
             @Suppress("DEPRECATION")
             intent.getParcelableExtra("movieModel")
         }
+        setUpObserver()
         setUpUi(movie)
         getReviews(movie?.id)
+        movie?.id?.let { viewModel.isFavoriteMovie(it) }
     }
 
     private fun getReviews(movieId: Int?) {
@@ -94,8 +97,12 @@ class DetailMovieActivity : AppCompatActivity() {
                                 true
                             }
                             R.id.action_favorite -> {
-                                // Handle favorite action
-                                Toast.makeText(this@DetailMovieActivity, "Coming Soon Favorite", Toast.LENGTH_SHORT).show()
+                                val isFavorite = viewModel.isFavorite.value
+                                if (isFavorite) {
+                                    viewModel.deleteFavoriteMovie(movie.id!!)
+                                } else {
+                                    viewModel.insertFavoriteMovie(movie)
+                                }
                                 true
                             }
                             else -> false
@@ -128,6 +135,74 @@ class DetailMovieActivity : AppCompatActivity() {
                     if (errorState != null) {
                         showErrorDialog(this@DetailMovieActivity, errorState.error.message.toString())
                     }
+                }
+            }
+        }
+    }
+
+    private fun setUpObserver() {
+        insertObserver()
+        deleteObserver()
+        errorObserver()
+        loadingObserver()
+        favoriteObserver()
+    }
+
+    private fun favoriteObserver() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isFavorite.collectLatest { isFavorite ->
+                    val favoriteItem = binding.toolbar.menu.findItem(R.id.action_favorite)
+                    val color = if (isFavorite) {
+                        getColor(R.color.yellow)
+                    } else {
+                        getColor(R.color.white)
+                    }
+                    favoriteItem?.icon?.let { icon ->
+                        DrawableCompat.setTint(icon, color)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun loadingObserver() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.loading.collectLatest {
+                    binding.pbLoading.isVisible = it
+                }
+            }
+        }
+    }
+
+    private fun errorObserver() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.error.collectLatest {
+                    if (it != null) {
+                        showErrorDialog(this@DetailMovieActivity, it)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun deleteObserver() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.deleteFavoriteMovie.collectLatest {
+                    Toast.makeText(this@DetailMovieActivity, it, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun insertObserver() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.insertFavoriteMovie.collectLatest {
+                    Toast.makeText(this@DetailMovieActivity, it, Toast.LENGTH_SHORT).show()
                 }
             }
         }

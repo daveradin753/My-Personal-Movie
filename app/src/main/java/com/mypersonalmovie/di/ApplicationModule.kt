@@ -1,5 +1,6 @@
 package com.mypersonalmovie.di
 
+import com.mypersonalmovie.data.local.dao.MovieDao
 import com.mypersonalmovie.data.repository.MovieRepositoryImpl
 import com.mypersonalmovie.data.source.MovieApiService
 import com.mypersonalmovie.domain.repository.MovieRepository
@@ -15,8 +16,8 @@ object ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideMovieRepository(movieApiService: MovieApiService): MovieRepository =
-        MovieRepositoryImpl(movieApiService)
+    fun provideMovieRepository(movieApiService: MovieApiService, movieDao: MovieDao): MovieRepository =
+        MovieRepositoryImpl(movieApiService, movieDao)
 
 
 }

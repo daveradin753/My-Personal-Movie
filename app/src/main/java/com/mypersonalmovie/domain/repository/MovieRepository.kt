@@ -13,5 +13,8 @@ interface MovieRepository {
     fun getNowPlayingMovies(): Flow<PagingData<MovieModel>>
     fun getMovieDetail(movieId: Int): Flow<MovieDetail.Response>
     fun getMovieReviews(movieId: Int): Flow<PagingData<ReviewModel>>
+    fun insertFavoriteMovie(movie: MovieModel): Flow<String>
+    fun deleteFavoriteMovie(movieId: Int): Flow<String>
+    fun isFavoriteMovie(movieId: Int): Flow<Boolean>
 
 }

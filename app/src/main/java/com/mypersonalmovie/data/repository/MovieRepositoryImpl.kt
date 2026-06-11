@@ -5,12 +5,14 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.mypersonalmovie.data.dtos.MovieDetail
 import com.mypersonalmovie.data.local.dao.MovieDao
+import com.mypersonalmovie.data.local.entity.MovieEntity
 import com.mypersonalmovie.data.paging.MoviePagingSource
 import com.mypersonalmovie.data.paging.ReviewPagingSource
 import com.mypersonalmovie.data.source.MovieApiService
 import com.mypersonalmovie.domain.model.MovieModel
 import com.mypersonalmovie.domain.model.ReviewModel
 import com.mypersonalmovie.domain.repository.MovieRepository
+import com.mypersonalmovie.utils.toEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -71,6 +73,33 @@ class MovieRepositoryImpl @Inject constructor(
                 ReviewPagingSource(movieApiService, movieId)
             }
         ).flow
+    }
+
+    override fun insertFavoriteMovie(movie: MovieModel): Flow<String> = flow {
+        try {
+            movieDao.insertMovie(movie.toEntity())
+            emit("Success adding to favorite")
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    override fun deleteFavoriteMovie(movieId: Int): Flow<String> = flow {
+        try {
+            val movieEntity = movieDao.getMovieById(movieId)
+            if (movieEntity != null) {
+                movieDao.deleteMovie(movieEntity)
+                emit("Success removing from favorite")
+            } else {
+                emit("Movie not found in favorites")
+            }
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    override fun isFavoriteMovie(movieId: Int): Flow<Boolean> {
+        return movieDao.isMovieExists(movieId)
     }
 
 }
