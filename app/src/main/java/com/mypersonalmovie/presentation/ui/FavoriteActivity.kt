@@ -14,7 +14,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mypersonalmovie.R
 import com.mypersonalmovie.databinding.ActivityFavoriteBinding
-import com.mypersonalmovie.domain.model.MovieModel
 import com.mypersonalmovie.presentation.helper.FavoriteAdapter
 import com.mypersonalmovie.presentation.viewModel.FavoriteViewModel
 import com.mypersonalmovie.utils.showErrorDialog
